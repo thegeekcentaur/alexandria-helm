@@ -1,0 +1,31 @@
+# SOURCE: https://cloud.google.com/kubernetes-engine/docs/tutorials/guestbook
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: users-mgmt
+  labels:
+    app: users
+    role: cluster-member
+    tier: backend
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: users
+  template:
+    metadata:
+      labels:
+        app: users
+        role: cluster-member
+        tier: backend
+    spec:
+      containers:
+      - name: user-svc
+        image: "local/alexandria-users:1.0.001"
+        env:
+        - name: PORT
+          value: "9000"
+        - name: SERVICE_NAME
+          value: "alexandria-users"
+        ports:
+        - containerPort: 9000

@@ -1,0 +1,31 @@
+# SOURCE: https://cloud.google.com/kubernetes-engine/docs/tutorials/guestbook
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: catalogs-mgmt
+  labels:
+    app: catalogs
+    role: cluster-member
+    tier: backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: catalogs
+  template:
+    metadata:
+      labels:
+        app: catalogs
+        role: cluster-member
+        tier: backend
+    spec:
+      containers:
+      - name: catalogs-svc
+        image: "local/alexandria-catalogs:1.0.001"
+        env:
+        - name: PORT
+          value: "9000"
+        - name: SERVICE_NAME
+          value: "alexandria-catalogs"
+        ports:
+        - containerPort: 9000

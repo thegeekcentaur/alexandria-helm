@@ -1,0 +1,26 @@
+# SOURCE: https://cloud.google.com/kubernetes-engine/docs/tutorials/guestbook
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongo
+  labels:
+    app: mongo
+    role: cluster-member
+    tier: backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mongo
+  template:
+    metadata:
+      labels:
+        app: mongo
+        role: cluster-member
+        tier: backend
+    spec:
+      containers:
+      - name: mongo-db
+        image: "mongo:4.4.4"
+        ports:
+        - containerPort: 27017
